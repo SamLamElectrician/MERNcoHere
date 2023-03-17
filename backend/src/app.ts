@@ -1,14 +1,29 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import "dotenv/config";
 import DataModel from "./models/data";
+import dataRoutes from "./routes/coHereDataRoute";
 
 const app = express();
 
-//getting data for previous calls to the generator
-app.get("/", async (req, res) => {
-	//finding the data for the note
-	const data = await DataModel.find().exec();
-	res.status(200).json(data);
+app.use("/api/data", dataRoutes);
+
+//error handler for non endpoint link
+app.use((req, res, next) => {
+	next(Error("Endpoint not found"));
+});
+
+//error handler to keep it DRY
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
+	let errorMessage = "an unknown error has occured";
+	//checks if error is an Error Type
+
+	if (error instanceof Error) {
+		//set error message as eerror message
+		errorMessage = error.message;
+	}
+	//send back a 500 and send back json
+	res.status(500).json({ error: errorMessage });
 });
 
 export default app;
