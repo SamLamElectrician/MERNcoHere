@@ -5,6 +5,8 @@ import dataRoutes from "./routes/coHereDataRoute";
 
 const app = express();
 
+app.use(express.json());
+
 app.use("/api/data", dataRoutes);
 
 //error handler for non endpoint link
