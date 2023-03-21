@@ -2,11 +2,15 @@ import express, { NextFunction, Request, Response } from "express";
 import "dotenv/config";
 import DataModel from "./models/data";
 import dataRoutes from "./routes/coHereDataRoute";
+import morgan from "morgan";
 
 const app = express();
 
+app.use(morgan("dev"));
+//allows app to read and write json to server
 app.use(express.json());
 
+//redirects an routes to this endpoint
 app.use("/api/data", dataRoutes);
 
 //error handler for non endpoint link

@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/", dataController.getAllData);
 //post request for sending data to server
 router.post("/", dataController.createData);
-
+//get a single data point
 router.get("/:dataId", dataController.getDataPoint);
 
 export default router;
