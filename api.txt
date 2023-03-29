@@ -1,2 +1,0 @@
-hxz67Gu8AEFDVpEM90aEMW84IhTSfVvmGuQH6ZO8
-mongodb+srv://hung325064:<password>@cluster0.bfvpaay.mongodb.net/test
