@@ -34,7 +34,7 @@ app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
 		errorMessage = error.message;
 	}
 	//send back a 500 and send back json
-	res.status(500).json({ error: errorMessage });
+	res.status(statusCode).json({ error: errorMessage });
 });
 
 export default app;
