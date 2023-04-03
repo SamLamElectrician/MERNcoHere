@@ -22,7 +22,17 @@ export const getDataPoint: RequestHandler = async (req, res, next) => {
 	}
 };
 
-export const createData: RequestHandler = async (req, res, next) => {
+interface CreateDataBody {
+	title?: string;
+	text?: string;
+}
+
+export const createData: RequestHandler<
+	unknown,
+	unknown,
+	CreateDataBody,
+	unknown
+> = async (req, res, next) => {
 	//getting input of api to put into the server
 	const title = req.body.title;
 	const text = req.body.text;
