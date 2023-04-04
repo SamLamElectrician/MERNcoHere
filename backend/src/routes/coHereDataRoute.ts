@@ -8,5 +8,7 @@ router.get("/", dataController.getAllData);
 router.post("/", dataController.createData);
 //get a single data point
 router.get("/:dataId", dataController.getDataPoint);
+//update note
+router.get("/:dataId", dataController.updateData);
 
 export default router;
