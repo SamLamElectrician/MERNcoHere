@@ -29,7 +29,7 @@ export const getDataPoint: RequestHandler = async (req, res, next) => {
 
 interface CreateDataBody {
 	title?: string;
-	text?: string;
+	textGenerated?: string;
 }
 
 export const createData: RequestHandler<
@@ -40,13 +40,16 @@ export const createData: RequestHandler<
 > = async (req, res, next) => {
 	//getting input of api to put into the server
 	const title = req.body.title;
-	const text = req.body.text;
+	const text = req.body.textGenerated;
 	try {
 		if (!title) {
 			//code for argument missing
 			throw createHttpError(400, "Data is missing request");
 		}
-		const newData = await DataModel.create({ title: title, text: text });
+		const newData = await DataModel.create({
+			title: title,
+			textGenerated: text,
+		});
 		//201 is new resource created
 		res.send(201).json(newData);
 	} catch (error) {
@@ -60,7 +63,7 @@ interface UpdateDataParams {
 
 interface UpdateDataBody {
 	title?: string;
-	text?: string;
+	textGenerated?: string;
 }
 
 export const updateData: RequestHandler<
@@ -71,8 +74,27 @@ export const updateData: RequestHandler<
 > = async (req, res, next) => {
 	const dataId = req.params.dataId;
 	const newTitle = req.body.title;
-	const newText = req.body.text;
+	const newTextGen = req.body.textGenerated;
 	try {
+		//error handler for invalid data ID
+		if (!mongoose.isValidObjectId(dataId)) {
+			throw createHttpError(400, "Invalid Data ID");
+		}
+		//missing params
+		if (!newTitle) {
+			throw createHttpError(400, "Data must have title");
+		}
+		const data = await DataModel.findById(dataId).exec();
+		if (!data) {
+			throw createHttpError(404, "Data missing");
+		}
+
+		data.title = newTitle;
+		data.textGenerated = newTextGen;
+
+		const updatedData = await data.save();
+
+		res.status(200).json(updatedData);
 	} catch (error) {
 		next(error);
 	}
