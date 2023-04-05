@@ -2,10 +2,11 @@ import { RequestHandler } from "express";
 import DataModel from "../models/data";
 import createHttpError from "http-errors";
 import mongoose from "mongoose";
+import data from "../models/data";
 
 export const getAllData: RequestHandler = async (req, res, next) => {
 	try {
-		//finding the data for the note
+		//finding the data
 		const data = await DataModel.find().exec();
 		res.status(200).json(data);
 	} catch (error) {
@@ -66,7 +67,7 @@ interface UpdateDataBody {
 	textGenerated?: string;
 }
 
-export const updateData: RequestHandler<
+export const updateDataPoint: RequestHandler<
 	UpdateDataParams,
 	unknown,
 	UpdateDataBody,
@@ -95,6 +96,25 @@ export const updateData: RequestHandler<
 		const updatedData = await data.save();
 
 		res.status(200).json(updatedData);
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const deleteDataPoint: RequestHandler = async (req, res, next) => {
+	const dataId = req.params.dataId;
+	try {
+		if (!mongoose.isValidObjectId(dataId)) {
+			throw createHttpError(400, "invalid Data ID");
+		}
+		const data = await DataModel.findById(dataId).exec();
+		if (!data) {
+			throw createHttpError(404, "Data not found!");
+		}
+
+		await data.remove();
+		//http code deletion sucessful
+		res.sendStatus(204);
 	} catch (error) {
 		next(error);
 	}

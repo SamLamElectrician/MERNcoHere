@@ -9,6 +9,6 @@ router.post("/", dataController.createData);
 //get a single data point
 router.get("/:dataId", dataController.getDataPoint);
 //update note
-router.get("/:dataId", dataController.updateData);
+router.patch("/:dataId", dataController.updateDataPoint);
 
 export default router;
