@@ -105,15 +105,13 @@ export const deleteDataPoint: RequestHandler = async (req, res, next) => {
 	const dataId = req.params.dataId;
 	try {
 		if (!mongoose.isValidObjectId(dataId)) {
-			throw createHttpError(400, "invalid Data ID");
+			throw createHttpError(400, "Invalid Data ID");
 		}
 		const data = await DataModel.findById(dataId).exec();
 		if (!data) {
-			throw createHttpError(404, "Data not found!");
+			throw createHttpError(404, "Data not found");
 		}
-
-		await data.remove();
-		//http code deletion sucessful
+		await data.deleteOne();
 		res.sendStatus(204);
 	} catch (error) {
 		next(error);

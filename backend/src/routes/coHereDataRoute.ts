@@ -11,4 +11,6 @@ router.get("/:dataId", dataController.getDataPoint);
 //update note
 router.patch("/:dataId", dataController.updateDataPoint);
 
+router.delete("/:dataId", dataController.deleteDataPoint);
+
 export default router;
