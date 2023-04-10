@@ -2,8 +2,8 @@ import { RequestHandler } from "express";
 import DataModel from "../models/data";
 import createHttpError from "http-errors";
 import mongoose from "mongoose";
-import data from "../models/data";
 
+//getting all the datta points
 export const getAllData: RequestHandler = async (req, res, next) => {
 	try {
 		//finding the data
@@ -15,6 +15,7 @@ export const getAllData: RequestHandler = async (req, res, next) => {
 	}
 };
 
+//getting one singluar data point
 export const getDataPoint: RequestHandler = async (req, res, next) => {
 	const dataId = req.params.dataId;
 	try {
@@ -33,6 +34,7 @@ interface CreateDataBody {
 	textGenerated?: string;
 }
 
+//creating a data point
 export const createData: RequestHandler<
 	unknown,
 	unknown,
@@ -57,7 +59,7 @@ export const createData: RequestHandler<
 		next(error);
 	}
 };
-
+//interface to update the data point
 interface UpdateDataParams {
 	dataId: string;
 }
