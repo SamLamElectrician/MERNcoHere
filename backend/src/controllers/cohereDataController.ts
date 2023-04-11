@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import DataModel from "../models/data";
 import createHttpError from "http-errors";
 import mongoose from "mongoose";
+import { cohereAPICall } from "../utils/cohere";
 
 //getting all the datta points
 export const getAllData: RequestHandler = async (req, res, next) => {
@@ -43,18 +44,19 @@ export const createData: RequestHandler<
 > = async (req, res, next) => {
 	//getting input of api to put into the server
 	const title = req.body.title;
-	const text = req.body.textGenerated;
+	const text = await cohereAPICall(title);
 	try {
-		if (!title) {
+		if (!title && !text) {
 			//code for argument missing
 			throw createHttpError(400, "Data is missing request");
 		}
+
 		const newData = await DataModel.create({
 			title: title,
 			textGenerated: text,
 		});
 		//201 is new resource created
-		res.send(201).json(newData);
+		res.sendStatus(201).json(newData);
 	} catch (error) {
 		next(error);
 	}
@@ -69,6 +71,7 @@ interface UpdateDataBody {
 	textGenerated?: string;
 }
 
+//maybe not needed to update
 export const updateDataPoint: RequestHandler<
 	UpdateDataParams,
 	unknown,

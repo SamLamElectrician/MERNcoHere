@@ -1,21 +1,23 @@
-import { init, generate } from "cohere-ai";
+import cohere from "cohere-ai";
 import env from "./validateEnv";
 
 //validating env is a string,
 
-export async function cohere(): Promise<void> {
+export async function cohereAPICall(title: any): Promise<string> {
 	try {
-		await init(env.COHERE);
-		const response = await generate({
+		cohere.init(env.COHERE);
+		const response = await cohere.generate({
 			model: "xlarge",
-			prompt: "Write a LinkedIn post about starting a career in tech:",
-			max_tokens: 300,
+			prompt: title,
+			max_tokens: 500,
 			temperature: 0.9,
 			k: 0,
 			stop_sequences: [],
 			return_likelihoods: "NONE",
 		});
+		return response.body.generations[0].text;
 	} catch (error) {
 		console.error("Failed to generate Link");
+		return "";
 	}
 }
