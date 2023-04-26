@@ -3,14 +3,15 @@ const nextConfig = {
 	reactStrictMode: true,
 };
 
-module.exports = nextConfig;
-module.exports = {
-	async rewrites() {
-		return [
-			{
-				source: "/api/:path*",
-				destination: "http:localhost:5000/api/data",
-			},
-		];
-	},
-};
+// module.exports = {
+// 	webpackDevMiddleware: (config) => {
+// 		config.proxy = {
+// 			"/api": {
+// 				target: "http://localhost:5000",
+// 				pathRewrite: { "^/api": "/api" },
+// 			},
+// 		};
+
+// 		return config;
+// 	},
+// };

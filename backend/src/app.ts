@@ -4,9 +4,16 @@ import "dotenv/config";
 import dataRoutes from "./routes/coHereDataRoute";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
+import cors from "cors";
 
 const app = express();
 
+const allowedOrigins = ["http://localhost:3000"];
+
+const options: cors.CorsOptions = {
+	origin: allowedOrigins,
+};
+app.use(cors(options));
 app.use(morgan("dev"));
 //allows app to read and write json to server
 app.use(express.json());
