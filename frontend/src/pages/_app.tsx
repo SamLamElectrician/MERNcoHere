@@ -1,9 +1,13 @@
+import "../styles/global.css";
 import { useEffect, useState } from "react";
-import { Data } from "./models/data";
+import { Data as DataModel } from "./models/data";
+import DataCard from "../components/DataCard";
+// import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.css";
 
 export default function App() {
 	//grabbing data
-	const [data, setData] = useState<Data[]>([]);
+	const [data, setData] = useState<DataModel[]>([]);
 	useEffect(() => {
 		async function loadData() {
 			try {
@@ -20,5 +24,11 @@ export default function App() {
 		}
 		loadData();
 	}, []);
-	return <div className='App'>{JSON.stringify(data)}</div>;
+	return (
+		<div className='App'>
+			{data.map((datapoint) => (
+				<DataCard data={datapoint} key={datapoint._id} />
+			))}
+		</div>
+	);
 }

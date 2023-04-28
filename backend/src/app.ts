@@ -7,7 +7,7 @@ import createHttpError, { isHttpError } from "http-errors";
 import cors from "cors";
 
 const app = express();
-
+//proxy for Cors
 const allowedOrigins = ["http://localhost:3000"];
 
 const options: cors.CorsOptions = {

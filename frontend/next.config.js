@@ -2,7 +2,7 @@
 const nextConfig = {
 	reactStrictMode: true,
 };
-
+module.exports = nextConfig;
 // module.exports = {
 // 	webpackDevMiddleware: (config) => {
 // 		config.proxy = {
