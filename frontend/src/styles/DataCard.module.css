@@ -2,6 +2,10 @@
 	background-color: #fff;
 }
 
+.dataBody {
+	overflow-y: scroll;
+	mask-image: linear-gradient(180deg, #000 60%, transparent);
+}
 .dataText {
 	white-space: pre-line;
 }

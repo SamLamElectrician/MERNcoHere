@@ -7,13 +7,14 @@ import { Card } from "react-bootstrap";
 
 interface DataProp {
 	data: DataModel;
+	className?: string;
 }
 
-export default function notes({ data }: DataProp) {
+export default function notes({ data, className }: DataProp) {
 	const { title, textGenerated, createdAt, updatedAt } = data;
 	return (
-		<Card className={styles.dataCard}>
-			<Card.Body>
+		<Card className={`${styles.dataCard} ${className}`}>
+			<Card.Body className={styles.dataBody}>
 				<Card.Title>{title}</Card.Title>
 				<Card.Text className={styles.dataText}>{textGenerated}</Card.Text>
 				<Card.Footer>{createdAt || updatedAt}</Card.Footer>
