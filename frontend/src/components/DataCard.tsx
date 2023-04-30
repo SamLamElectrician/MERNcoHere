@@ -12,6 +12,10 @@ interface DataProp {
 
 export default function notes({ data, className }: DataProp) {
 	const { title, textGenerated, createdAt, updatedAt } = data;
+
+	if (createdAt || updatedAt) {
+	}
+
 	return (
 		<Card className={`${styles.dataCard} ${className}`}>
 			<Card.Body className={styles.dataBody}>
