@@ -6,6 +6,7 @@ import DataCard from "../components/DataCard";
 import "bootstrap/dist/css/bootstrap.css";
 import { Col, Container, Row } from "react-bootstrap";
 import styles from "../styles/dataCardPage.module.css";
+import * as DataApi from "../network/data_api";
 
 export default function App() {
 	//grabbing data
@@ -13,11 +14,7 @@ export default function App() {
 	useEffect(() => {
 		async function loadData() {
 			try {
-				const response = await fetch("http://localhost:5000/api/data/", {
-					method: "GET",
-				});
-				const alldata = await response.json();
-				console.log(response);
+				const alldata = await DataApi.fetchDataCard();
 				setData(alldata);
 			} catch (error) {
 				console.error(error);
