@@ -80,7 +80,7 @@ export const updateDataPoint: RequestHandler<
 > = async (req, res, next) => {
 	const dataId = req.params.dataId;
 	const newTitle = req.body.title;
-	const newTextGen = req.body.textGenerated;
+	// const newTextGen = req.body.textGenerated;
 	try {
 		//error handler for invalid data ID
 		if (!mongoose.isValidObjectId(dataId)) {
@@ -96,7 +96,7 @@ export const updateDataPoint: RequestHandler<
 		}
 
 		data.title = newTitle;
-		data.textGenerated = newTextGen;
+		data.textGenerated = await cohereAPICall(newTitle);
 
 		const updatedData = await data.save();
 
