@@ -4,13 +4,16 @@ import { Data as DataModel } from "./models/data";
 import DataCard from "../components/DataCard";
 // import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/css/bootstrap.css";
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import styles from "../styles/dataCardPage.module.css";
 import * as DataApi from "../network/data_api";
+import AddDataDialog from "../components/AddDataDialog";
 
 export default function App() {
 	//grabbing data
 	const [data, setData] = useState<DataModel[]>([]);
+	const [showAddDataDialog, setShowAddDataDialog] = useState(false);
+
 	useEffect(() => {
 		async function loadData() {
 			try {
@@ -25,6 +28,9 @@ export default function App() {
 	}, []);
 	return (
 		<Container className='App'>
+			<Button onClick={() => setShowAddDataDialog(true)}>
+				Generate New Data
+			</Button>
 			<Row xs={1} md={2} xl={3} className='g-4'>
 				{data.map((datapoint) => (
 					<Col key={datapoint._id}>
@@ -32,6 +38,9 @@ export default function App() {
 					</Col>
 				))}
 			</Row>
+			{showAddDataDialog && (
+				<AddDataDialog onDismiss={() => setShowAddDataDialog(false)} />
+			)}
 		</Container>
 	);
 }
