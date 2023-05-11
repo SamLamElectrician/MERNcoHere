@@ -1,6 +1,6 @@
 import { Data } from "../pages/models/data";
 
-//front end error handling
+//front end error handling for request
 async function fetchData(input: RequestInfo, init?: RequestInit) {
 	const response = await fetch(input, init);
 	if (response.ok) {
@@ -25,9 +25,10 @@ export interface DataInput {
 	title: string;
 }
 export async function createDataCard(data: DataInput): Promise<Data> {
-	const response = await fetchData("/api/notes", {
+	const response = await fetchData("http://localhost:5000/api/data/", {
 		method: "POST",
 		headers: {
+			Accept: "application/json",
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify(data),

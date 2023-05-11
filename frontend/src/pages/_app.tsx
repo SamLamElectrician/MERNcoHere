@@ -39,7 +39,13 @@ export default function App() {
 				))}
 			</Row>
 			{showAddDataDialog && (
-				<AddDataDialog onDismiss={() => setShowAddDataDialog(false)} />
+				<AddDataDialog
+					onDismiss={() => setShowAddDataDialog(false)}
+					onDataGenerated={(newDataPoint) => {
+						setData([...data, newDataPoint]);
+						setShowAddDataDialog(false);
+					}}
+				/>
 			)}
 		</Container>
 	);

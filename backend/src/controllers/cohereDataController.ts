@@ -46,7 +46,7 @@ export const createData: RequestHandler<
 	const title = req.body.title;
 	const text = await cohereAPICall(title);
 	try {
-		if (!title && !text) {
+		if (!title) {
 			//code for argument missing
 			throw createHttpError(400, "Data is missing request");
 		}
@@ -56,7 +56,7 @@ export const createData: RequestHandler<
 			textGenerated: text,
 		});
 		//201 is new resource created
-		res.sendStatus(201).json(newData);
+		res.status(201).json(newData);
 	} catch (error) {
 		next(error);
 	}
